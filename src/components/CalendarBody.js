@@ -13,6 +13,10 @@ import { daysNames } from '../commons/calendarDesc';
 
 const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
   const [calendarDays, setCalendarDays] = useState([]);
+  const [monthInfo, setMonthInfo] = useState({
+    monthStart: null,
+    monthEnd: null,
+  });
 
   useEffect(() => {
     const firstDayDiff = startWithSunday ? 0 : 6;
@@ -26,7 +30,9 @@ const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
       days.push(addDays(startWith, i));
     }
     setCalendarDays(days);
-  }, [currentMonth]);
+    setMonthInfo({ monthStart, monthEnd });
+    console.log(startWith < endWith);
+  }, [currentMonth, startWithSunday]);
 
   return (
     <TableWrap>
@@ -37,11 +43,15 @@ const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
       </ColumnNames>
       <Cells>
         {calendarDays.length > 0 &&
-          calendarDays.map((day, index) => (
-            <DayCell key={index}>
-              <p>{getDate(day)}</p>
-            </DayCell>
-          ))}
+          calendarDays.map((day, index) => {
+            const isCurrentMonth =
+              day >= monthInfo.monthStart && day <= monthInfo.monthEnd;
+            return (
+              <DayCell key={index} isCurrentMonth={isCurrentMonth}>
+                <p>{getDate(day)}</p>
+              </DayCell>
+            );
+          })}
       </Cells>
     </TableWrap>
   );
@@ -50,29 +60,44 @@ const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
 export default CalendarBody;
 
 const TableWrap = styled.div`
-  background-color: #eeeeee;
+  background-color: ${({ theme }) => theme.secondary};
   width: 28em;
+  transition: all 0.2s ease-in-out;
 `;
 const ColumnNames = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  color: ${({ theme }) => theme.primary};
+  border-left: ${({ theme }) => `1px solid ${theme.primary}`};
+  border-right: ${({ theme }) => `1px solid ${theme.primary}`};
+  background-color: ${({ theme }) => theme.light};
 `;
-const ColumnName = styled.div``;
+const ColumnName = styled.p`
+  font-size: 1.4em;
+  line-height: 1.6em;
+  text-align: center;
+`;
 
 const Cells = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
   grid-template-columns: repeat(7, 1fr);
+  transition: all 0.2s ease-in-out;
 `;
 
 const DayCell = styled.div`
+  transition: all 0.1s ease-in-out;
   width: 4em;
   height: 4em;
-  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1em;
-  border: 1px solid #00000010;
+  outline: 1px solid #ffffff06;
+  opacity: ${({ isCurrentMonth }) => (isCurrentMonth ? 1 : 0.4)};
+  :hover {
+    box-shadow: ${({ theme }) => `inset 0 0 12px 2px #ffffff10`};
+    cursor: pointer;
+  }
 `;

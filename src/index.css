@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,4 +7,12 @@
 }
 body {
   margin: 0;
+  font-family: 'Overpass', sans-serif;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
 }
