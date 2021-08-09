@@ -2,18 +2,31 @@ import { addMonths, getMonth, getYear, subMonths } from 'date-fns';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CalendarBody from './CalendarBody';
-import { months } from '../commons/calendarDesc';
 import { AiFillLeftSquare } from 'react-icons/ai';
 import { AiFillRightSquare } from 'react-icons/ai';
 
-const Calendar = () => {
+// month labels
+export const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+const Calendar = ({ pickDate }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const backwardMonth = () => {
-    setCurrentMonth(subMonths(currentMonth, 1));
-  };
-  const forwardMonth = () => {
-    setCurrentMonth(addMonths(currentMonth, 1));
-  };
+
+  const backwardMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
+  const forwardMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+
   return (
     <CalendarContainer>
       <CalendarHeading>
@@ -25,7 +38,7 @@ const Calendar = () => {
           <RightArrow />
         </span>
       </CalendarHeading>
-      <CalendarBody currentMonth={currentMonth} />
+      <CalendarBody currentMonth={currentMonth} pickDate={pickDate} />
     </CalendarContainer>
   );
 };
@@ -33,12 +46,12 @@ const Calendar = () => {
 export default Calendar;
 
 const CalendarContainer = styled.div`
-  font-size: 1rem;
   display: flex;
   flex-direction: column;
   max-width: 28em;
   margin: auto auto;
-  color: ${({ theme }) => theme.light};
+  color: #000;
+  box-shadow: 1px 2px 4px #000;
 `;
 
 const CalendarHeading = styled.div`
@@ -47,7 +60,7 @@ const CalendarHeading = styled.div`
   align-items: center;
   padding: 0.25rem 0.5rem;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.primary};
+  background-color: #fff;
   > span {
     display: flex;
     align-items: center;

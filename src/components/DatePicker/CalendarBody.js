@@ -9,9 +9,11 @@ import {
 import { endOfMonth } from 'date-fns/esm';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { daysNames } from '../commons/calendarDesc';
 
-const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
+//days labels
+export const daysNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+const CalendarBody = ({ currentMonth, pickDate }) => {
   const [calendarDays, setCalendarDays] = useState([]);
   const [monthInfo, setMonthInfo] = useState({
     monthStart: null,
@@ -19,7 +21,9 @@ const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
   });
 
   useEffect(() => {
-    const firstDayDiff = startWithSunday ? 0 : 6;
+    // first day of week
+    // 0 - sunday , 1 - saturday, 2 - friday, ... , 6 - monday
+    const firstDayDiff = 0;
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
     const startWith = subDays(monthStart, getDay(monthStart) + firstDayDiff);
@@ -31,8 +35,7 @@ const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
     }
     setCalendarDays(days);
     setMonthInfo({ monthStart, monthEnd });
-    console.log(startWith < endWith);
-  }, [currentMonth, startWithSunday]);
+  }, [currentMonth]);
 
   return (
     <TableWrap>
@@ -47,7 +50,11 @@ const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
             const isCurrentMonth =
               day >= monthInfo.monthStart && day <= monthInfo.monthEnd;
             return (
-              <DayCell key={index} isCurrentMonth={isCurrentMonth}>
+              <DayCell
+                key={index}
+                isCurrentMonth={isCurrentMonth}
+                onClick={() => pickDate(day)}
+              >
                 <p>{getDate(day)}</p>
               </DayCell>
             );
@@ -60,17 +67,15 @@ const CalendarBody = ({ currentMonth, startWithSunday = true }) => {
 export default CalendarBody;
 
 const TableWrap = styled.div`
-  background-color: ${({ theme }) => theme.secondary};
+  background-color: #fff;
   width: 28em;
   transition: all 0.2s ease-in-out;
 `;
 const ColumnNames = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  color: ${({ theme }) => theme.primary};
-  border-left: ${({ theme }) => `1px solid ${theme.primary}`};
-  border-right: ${({ theme }) => `1px solid ${theme.primary}`};
-  background-color: ${({ theme }) => theme.light};
+  box-shadow: 1px 0 2px #000;
+  background-color: #eee;
 `;
 const ColumnName = styled.p`
   font-size: 1.4em;
@@ -94,10 +99,10 @@ const DayCell = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 1em;
-  outline: 1px solid #ffffff06;
+  outline: 1px solid #00000008;
   opacity: ${({ isCurrentMonth }) => (isCurrentMonth ? 1 : 0.4)};
   :hover {
-    box-shadow: ${({ theme }) => `inset 0 0 12px 2px #ffffff10`};
+    box-shadow: inset 0 0 12px 2px #00000030;
     cursor: pointer;
   }
 `;

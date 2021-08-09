@@ -6,5 +6,4 @@ Fully responsive calendar build with react and styled components.
 
 - custom labels
 - start from monday or sunday
-- pass a function which receive Date object on day select
-- size related to parent font-size
+- easy manipulated size

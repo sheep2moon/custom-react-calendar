@@ -1,15 +1,20 @@
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { theme } from './commons/theme';
-import Calendar from './components/Calendar';
+import Homepage from './components/Homepage';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className='app'>
-        <Calendar />
-      </div>
+      <AppContainer>
+        <Homepage />
+      </AppContainer>
     </ThemeProvider>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  width: 100vw;
+  min-height: 100vh;
+`;
