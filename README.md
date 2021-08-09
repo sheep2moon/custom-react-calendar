@@ -1,9 +1,10 @@
-# Custom React Calendar Component
+# Custom React DatePicker Component
 
-Fully responsive calendar build with react and styled components.
+Responsive date-picker build with react, styled components, date-fns, react-icons for my future projects.
 
 ## features
 
 - custom labels
-- start from monday or sunday
+- custom date format
+- week start from any day
 - easy manipulated size
