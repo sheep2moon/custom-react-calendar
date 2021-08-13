@@ -57,6 +57,7 @@ const PickerWrap = styled.div`
   > p {
     font-size: 1.2em;
     font-weight: 700;
+    color: #000;
   }
   :hover {
     cursor: pointer;
@@ -65,4 +66,5 @@ const PickerWrap = styled.div`
 `;
 const PickerIcon = styled(BsCalendar)`
   font-size: 2em;
+  color: #000;
 `;

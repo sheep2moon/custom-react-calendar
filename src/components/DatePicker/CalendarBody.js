@@ -13,7 +13,7 @@ import styled from 'styled-components';
 //days labels
 export const daysNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const CalendarBody = ({ currentMonth, pickDate }) => {
+const CalendarBody = ({ currentMonth, pickDate, startFromMonday = false }) => {
   const [calendarDays, setCalendarDays] = useState([]);
   const [monthInfo, setMonthInfo] = useState({
     monthStart: null,
@@ -21,13 +21,23 @@ const CalendarBody = ({ currentMonth, pickDate }) => {
   });
 
   useEffect(() => {
-    // first day of week
-    // 0 - sunday , 1 - saturday, 2 - friday, ... , 6 - monday
-    const firstDayDiff = 0;
+    // 0 - sunday , 6 - monday
+    const firstDayDiff = startFromMonday ? 6 : 0;
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(currentMonth);
-    const startWith = subDays(monthStart, getDay(monthStart) + firstDayDiff);
-    const endWith = addDays(monthEnd, 6 - getDay(monthEnd));
+    const startWith = subDays(
+      monthStart,
+      (getDay(monthStart) + firstDayDiff) % 7
+    );
+    let endWith = null;
+
+    if (firstDayDiff === 6) {
+      // start with monday
+      endWith = addDays(monthEnd, (7 - getDay(monthEnd)) % 7);
+    } else {
+      // start with sunday
+      endWith = addDays(monthEnd, 6 - getDay(monthEnd));
+    }
     const daysCount = differenceInCalendarDays(endWith, startWith);
     let days = [];
     for (let i = 0; i < daysCount + 1; i++) {
@@ -35,7 +45,7 @@ const CalendarBody = ({ currentMonth, pickDate }) => {
     }
     setCalendarDays(days);
     setMonthInfo({ monthStart, monthEnd });
-  }, [currentMonth]);
+  }, [currentMonth, startFromMonday]);
 
   return (
     <TableWrap>

@@ -7,7 +7,7 @@ const Homepage = () => {
   return (
     <HomeContainer>
       <h1>custom date picker component</h1>
-      <p>created with react,styled components,react-icons</p>
+      <p>created with react, styled components, react-icons, date-fns</p>
       <PickerWrap>
         <DatePicker />
       </PickerWrap>
@@ -16,7 +16,7 @@ const Homepage = () => {
         <ul>
           <li>custom labels</li>
           <li>custom date format</li>
-          <li>week start from any day</li>
+          <li>week start from monday or sunday</li>
           <li>responsive</li>
         </ul>
         <a href='https://github.com/sheep2moon/custom-react-calendar'>
@@ -35,8 +35,9 @@ const HomeContainer = styled.div`
   max-width: 900px;
   display: flex;
   flex-direction: column;
-  padding: 0.25rem;
+  padding: 0.25em;
   align-items: flex-start;
+  color: #fff;
   > h1 {
     text-transform: uppercase;
     font-size: 4em;
@@ -59,6 +60,7 @@ const Info = styled.div`
     font-size: 3em;
     padding: 0.2em;
     margin: 0.2em 0;
+    color: #000;
     background-color: #2aefc4;
     line-height: 1;
   }
@@ -78,9 +80,9 @@ const Info = styled.div`
     align-items: center;
     padding: 0.5rem;
     font-size: 1.4em;
-    color: #fff;
+    color: #000;
     text-decoration: none;
-    background-color: #000;
+    background-color: #fff;
     > svg {
       margin-right: 0.5em;
       font-size: 1.6em;
